@@ -7,12 +7,10 @@ body {
   line-height: 1.5;
 }
 header {
-  background: url('header-bg.jpg') no-repeat center center;
-  background-size: cover;
+  background: #0b6efd; /* синий фон */
   color: #fff;
   padding: 20px;
   text-align: center;
-  position: relative;
 }
 nav {
   background: #fff;
