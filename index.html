@@ -6,7 +6,6 @@
 <title>#demo records — Google Forms и Legal Documents</title>
 <link rel="stylesheet" href="styles.css">
 <style>
-/* Минимальный CSS для навигации и адаптивного отображения */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -65,10 +64,6 @@ article.active {
   opacity: 1;
   transform: translateY(0);
 }
-iframe {
-  width: 100%;
-  border: none;
-}
 .forms-header {
   position: relative;
   text-align: center;
@@ -89,9 +84,19 @@ iframe {
   font-size: 28px;
   margin: 0;
 }
+iframe {
+  width: 100%;
+  max-width: 1000px;
+  height: 2600px; /* для ПК */
+  border: none;
+}
 @media (max-width: 600px) {
   nav button {
     width: 95%;
+  }
+  iframe {
+    width: 95%;
+    height: 3200px; /* для мобильных устройств */
   }
 }
 </style>
@@ -113,19 +118,12 @@ iframe {
 
 <!-- Google Forms -->
 <article id="forms" class="active">
-  <!-- Верхний колонтитул с картинкой -->
   <div class="forms-header">
     <img src="header-bg.jpg" alt="#demo records" />
     <h1>#demo records — Google Forms</h1>
   </div>
 
-  <!-- Встроенная форма -->
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe7NnFIpDAKpd1q0i7mMXmdZpQqzHNGumt4oWkF5HTJD1EZLg/viewform?embedded=true" 
-          width="100%" 
-          height="2617" 
-          frameborder="0" 
-          marginheight="0" 
-          marginwidth="0">
+  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe7NnFIpDAKpd1q0i7mMXmdZpQqzHNGumt4oWkF5HTJD1EZLg/viewform?embedded=true">
     Загрузка…
   </iframe>
 </article>
