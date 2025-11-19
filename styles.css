@@ -7,10 +7,12 @@ body {
   line-height: 1.5;
 }
 header {
-  background: #0b6efd;
-  color: #fff;
+  background: url('header-bg.jpg') no-repeat center center;
+  background-size: cover;
+  color: #fff; /* текст белый, чтобы контраст был на картинке */
   padding: 20px;
   text-align: center;
+  position: relative; /* для наложения оверлея, если нужно */
 }
 nav {
   background: #fff;
