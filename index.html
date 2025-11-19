@@ -236,6 +236,30 @@ ul{margin-left:20px}
 </section>
 </article>
 </div>
+<article id="forms">
+  <h1>Google Forms</h1>
+  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe7NnFIpDAKpd1q0i7mMXmdZpQqzHNGumt4oWkF5HTJD1EZLg/viewform?embedded=true" 
+          width="100%" 
+          height="2617" 
+          frameborder="0" 
+          marginheight="0" 
+          marginwidth="0">
+    Загрузка…
+  </iframe>
+</article>
+</div> <!-- конец container -->
+
+<script>
+function showArticle(id){
+ document.querySelectorAll('article').forEach(a=>a.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+ document.getElementById(id+'Btn').classList.add('active');
+}
+</script>
+</body>
+</html>
+
 <script>
 function showArticle(id){
  document.querySelectorAll('article').forEach(a=>a.classList.remove('active'));
