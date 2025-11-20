@@ -2,11 +2,11 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>#demo records — Отправить релиз / Legal</title>
 
 <!-- Inter -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 /* ------------------ Preloader ------------------ */
@@ -39,9 +39,10 @@
   --text: #000;
   --accent: #000; /* black buttons */
   --muted: #666;
-  --container: 1000px;
+  --container: 1100px;
 }
 *{box-sizing:border-box}
+html,body{height:100%}
 body {
   font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
   margin: 0;
@@ -50,7 +51,7 @@ body {
   color: var(--text);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
-  line-height:1.45;
+  line-height:1.5;
 }
 
 /* ------------------ Header (top) ------------------ */
@@ -58,24 +59,25 @@ header.site-header{
   background: #000; /* black */
   color: #fff; /* text white */
   text-align: center;
-  padding: 34px 16px;
+  padding: 36px 16px;
 }
 header.site-header h1{
-  font-size:32px;
+  font-size: 80px; /* ~2.5x of 32px */
   margin:0 0 8px;
-  font-weight:700;
+  font-weight:800;
+  line-height:1;
 }
 header.site-header p.lead{
   margin:0;
-  font-size:18px;
+  font-size:20px;
   font-weight:600;
   color:#fff;
 }
 header.site-header .description{
-  margin-top:14px;
-  font-size:15px;
+  margin-top:16px;
+  font-size:16px;
   color:#fff;
-  max-width:900px;
+  max-width:920px;
   margin-left:auto;
   margin-right:auto;
   text-align:justify; /* justify as requested */
@@ -106,7 +108,7 @@ nav.top-nav .btn {
 }
 nav.top-nav .btn:active{ transform:scale(.996) }
 nav.top-nav .btn:hover{ background:#111 }
-nav.top-nav .btn.full { width:95%; max-width:1200px; } /* stretched button look */
+nav.top-nav .btn.active{ background:#111; }
 
 /* ------------------ Container ------------------ */
 .container{
@@ -119,9 +121,9 @@ nav.top-nav .btn.full { width:95%; max-width:1200px; } /* stretched button look 
 article.card {
   display:none;
   background:#fff;
-  padding:22px;
-  border-radius:10px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  padding:24px;
+  border-radius:12px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.06);
   margin-bottom:18px;
   opacity:0;
   transform:translateY(10px);
@@ -130,12 +132,12 @@ article.card {
 article.card.active{ display:block; opacity:1; transform:translateY(0); }
 
 /* headings */
-article.card h1{ margin-top:0; font-size:22px; }
+article.card h1{ margin-top:0; font-size:26px; }
 article.card h2{ font-size:18px; margin-top:18px; }
-article.card p{ color:var(--text); }
+article.card p{ color:var(--text); font-size:15px; }
 
 /* lists */
-article.card ul{ margin-left:18px; }
+article.card ul{ margin-left:20px; }
 
 /* ------------------ Forms header (image + title) ------------------ */
 .forms-header {
@@ -168,7 +170,7 @@ article.card ul{ margin-left:18px; }
 }
 
 /* ------------------ iframe (google form) ------------------ */
-/* Make it full-width responsive while preserving UX */
+/* Full-width responsive while preserving UX */
 .form-frame-wrap{
   width:100%;
   display:flex;
@@ -176,19 +178,27 @@ article.card ul{ margin-left:18px; }
 }
 .form-frame-wrap iframe{
   width:100%;
-  max-width:1200px; /* maximum comfortable width on large screens */
+  max-width:1200px; /* comfortable max width */
   border:0;
   min-height:720px;
-  height:calc(100vh - 240px); /* try to fill viewport minus header/nav */
+  height:calc(100vh - 260px); /* attempt to fill viewport minus header/nav */
 }
 
-/* On mobile, use taller height and full width */
+/* Mobile: taller scrollable iframe */
 @media (max-width:900px){
+  header.site-header h1{ font-size:48px; } /* reduce header on tablet/mobile */
   .form-frame-wrap iframe{
     width:100%;
     max-width:100%;
     height:1400px; /* mobile comfortable scrolling height */
   }
+}
+@media (max-width:420px){
+  header.site-header h1{ font-size:34px; }
+  header.site-header p.lead{ font-size:16px; }
+  .forms-header .title h2{ font-size:18px; }
+  nav.top-nav .btn { max-width: 360px; }
+  .form-frame-wrap iframe { height:1600px; }
 }
 
 /* ------------------ Footer ------------------ */
@@ -200,18 +210,15 @@ footer.site-footer{
   font-size:14px;
 }
 
-/* small screens tweaks */
-@media (max-width:600px){
-  header.site-header h1{ font-size:24px; }
-  header.site-header p.lead{ font-size:15px; }
-  .forms-header .title h2{ font-size:20px; }
-}
+/* small print muted */
+.small-muted{ color:var(--muted); font-size:13px; }
+
 </style>
 </head>
 <body>
 
 <!-- Preloader -->
-<div id="preloader">
+<div id="preloader" aria-hidden="true">
   <div class="loader" aria-hidden="true"></div>
 </div>
 
@@ -220,20 +227,23 @@ footer.site-footer{
   <h1>#demo records</h1>
   <p class="lead">Выберите документ или загрузите релиз</p>
 
-  <div class="description">
-    Российский саб-лейбл YOF Music<br><br>
-    Специализируемся на жанрах opium, hardcore/style, mylancore, hoodtrap и смежных направлениях.<br><br>
-    Рабочее время ПН–ПТ, 12:00–19:00 (UTC+3).<br><br>
+  <div class="description" aria-label="Описание">
+    Российский саб-лейбл YOF Music
+
+    <br><br>
+    Специализируемся на жанрах opium, hardcore/style, mylancore, hoodtrap и смежных направлениях.
+
+    <br><br>
+    Рабочее время ПН–ПТ, 12:00–19:00 (UTC+3).
+
+    <br><br>
     На сайте доступна загрузка дебютного релиза с необходимым комплектом документов, вступающих в юридическую силу с момента заполнения формы.
   </div>
 </header>
 
-<!-- Nav — first wide button then two regular buttons -->
+<!-- Nav — buttons (all same size) -->
 <nav class="top-nav" aria-label="Навигация">
-  <!-- Stretched main button -->
-  <button id="formsBtn" class="btn full active" onclick="showArticle('forms', this)">Отправить релиз</button>
-
-  <!-- Secondary buttons -->
+  <button id="formsBtn" class="btn active" onclick="showArticle('forms', this)">Отправить релиз</button>
   <button id="termsBtn" class="btn" onclick="showArticle('terms', this)">Terms of Use</button>
   <button id="privacyBtn" class="btn" onclick="showArticle('privacy', this)">Privacy Policy</button>
 </nav>
@@ -245,7 +255,7 @@ footer.site-footer{
   <article id="forms" class="card active" aria-labelledby="forms-title">
     <div class="forms-header" aria-hidden="true">
       <!-- image should be placed in same dir as index.html under filename header-bg.jpg -->
-      <img src="header-bg.jpg" alt="#demo records header image">
+      <img src="header-bg.jpg" alt="#demo records header image" />
       <div class="title"><h2 id="forms-title">#demo records — Google Forms</h2></div>
     </div>
 
@@ -302,7 +312,7 @@ footer.site-footer{
       <h2>4. Услуги дистрибуции</h2>
       <ul>
         <li>Клиент предоставляет Компании глобальную, неисключительную лицензию на распространение, воспроизведение и использование своего музыкального контента в рамках оказания услуг.</li>
-        <li>Компания вправе использовать имя Клиента, изображения и метаданные для продвижения релизов и предоставлять контент сторонним сервисам (DSP, социальные сети, видео-платформы и др.).</li>
+        <li>Компания вправе использовать имя Клиента, изображения и метаданные для продвижения релизов и предоставлять контент сторонним сервисам (DSP, социальные сети, видеоплатформы и др.).</li>
         <li>Компания имеет право вычитать прямые расходы (например, платежные сборы, административные расходы) из доходов Клиента в порядке, установленном тарифами.</li>
       </ul>
     </section>
@@ -336,7 +346,7 @@ footer.site-footer{
       <h2>8. Конфиденциальность</h2>
       <ul>
         <li>Клиент обязуется не разглашать конфиденциальную информацию о платформе и не использовать её в целях, противоречащих интересам Компании.</li>
-        <li>Поля, помеченные как конфиденциальные, могут использоваться Компанией только для целей оказания услуг и защиты прав.</li>
+        <li>Конфиденциальная информация может использоваться Компанией только для целей оказания услуг и защиты прав.</li>
       </ul>
     </section>
 
@@ -505,7 +515,6 @@ footer.site-footer{
 window.addEventListener("load", function(){
   const preloader = document.getElementById('preloader');
   if(preloader){
-    // fade out
     preloader.style.transition = "opacity .35s ease";
     preloader.style.opacity = '0';
     setTimeout(()=>preloader.style.display='none', 380);
@@ -514,12 +523,12 @@ window.addEventListener("load", function(){
 
 /* ---------- showArticle function ---------- */
 function showArticle(id, btnEl){
-  // hide all
+  // hide all articles
   document.querySelectorAll('article.card').forEach(a=>{
     a.classList.remove('active');
   });
   // remove active from all nav buttons
-  document.querySelectorAll('nav.top-nav .btn, nav.top-nav .btn.full').forEach(b=>{
+  document.querySelectorAll('nav.top-nav .btn').forEach(b=>{
     b.classList.remove('active');
   });
 
@@ -531,12 +540,11 @@ function showArticle(id, btnEl){
   if(btnEl){
     btnEl.classList.add('active');
   } else {
-    // try to mark button by id
     const b = document.getElementById(id+'Btn');
     if(b) b.classList.add('active');
   }
 
-  // scroll to top of content for better UX
+  // scroll to top of content
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
