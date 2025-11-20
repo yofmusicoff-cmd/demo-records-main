@@ -1,549 +1,338 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>#demo records — Отправить релиз / Legal</title>
-
-<!-- Inter -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>#demo records — Legal Documents</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-/* ------------------ Preloader ------------------ */
-#preloader {
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:#fff;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-#preloader .loader {
-  border:6px solid #f3f3f3;
-  border-top:6px solid #000;
-  border-radius:50%;
-  width:60px;
-  height:60px;
-  animation:spin 1s linear infinite;
-}
-@keyframes spin {
-  0% { transform:rotate(0deg); }
-  100% { transform:rotate(360deg); }
-}
-
-/* ------------------ Base ------------------ */
-:root{
-  --bg: #fff;
-  --text: #000;
-  --accent: #000; /* black buttons */
-  --muted: #666;
-  --container: 1100px;
-}
-*{box-sizing:border-box}
-html,body{height:100%}
 body {
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-  margin: 0;
-  padding: 0;
-  background: var(--bg);
-  color: var(--text);
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  line-height:1.5;
+  margin:0;
+  font-family: 'Inter', 'Montserrat', sans-serif;
+  background: #111;
+  color: #fff;
 }
+a { color:inherit; text-decoration:none; }
+button { font-family:inherit; cursor:pointer; border:none; }
 
-/* ------------------ Header (top) ------------------ */
+/* Header */
 header.site-header{
-  background: #000; /* black */
-  color: #fff; /* text white */
+  background: url('header-bg.jpg') center center / cover no-repeat;
+  color: #fff;
   text-align: center;
   padding: 36px 16px;
+  position: relative;
+}
+header.site-header::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 0;
 }
 header.site-header h1{
-  font-size: 125px; /* ~2.5x of 32px */
-  margin:0 0 8px;
+  font-size: 125px;
+  margin:0 0 16px;
   font-weight:800;
   line-height:1;
-}
-header.site-header p.lead{
-  margin:0;
-  font-size:20px;
-  font-weight:600;
-  color:#fff;
+  position: relative;
+  z-index: 1;
 }
 header.site-header .description{
-  margin-top:30px;
+  margin-top:16px;
   font-size:16px;
   color:#fff;
   max-width:920px;
   margin-left:auto;
   margin-right:auto;
-  text-align:justify; /* justify as requested */
+  text-align:justify;
+  position: relative;
+  z-index: 1;
+}
+header.site-header p.lead{
+  margin: 20px 0 0;
+  font-size:20px;
+  font-weight:600;
+  color:#fff;
+  position: relative;
+  z-index: 1;
 }
 
-/* ------------------ Nav (buttons) ------------------ */
-nav.top-nav{
+/* Navigation */
+nav{
   display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:10px;
-  padding:18px 12px;
-  background:transparent;
+  justify-content:center;
+  gap:12px;
+  margin:24px 0;
 }
-nav.top-nav .btn {
-  width:90%;
-  max-width:420px;
-  padding:14px 18px;
-  border:0;
-  border-radius:10px;
-  background:var(--accent); /* black */
-  color:#fff; /* white text */
+nav button{
+  background:#000;
+  color:#fff;
+  padding:12px 24px;
+  border-radius:8px;
+  transition:0.3s;
   font-size:16px;
-  font-weight:700;
-  cursor:pointer;
-  transition: transform .12s ease, background .12s ease;
-  text-align:center;
 }
-nav.top-nav .btn:active{ transform:scale(.996) }
-nav.top-nav .btn:hover{ background:#111 }
-nav.top-nav .btn.active{ background:#111; }
-
-/* ------------------ Container ------------------ */
-.container{
-  max-width: var(--container);
-  margin: 18px auto;
-  padding: 0 16px 40px;
+nav button.active, nav button:hover{
+  background:#333;
 }
 
-/* ------------------ Article card ------------------ */
-article.card {
+/* Articles */
+article{
   display:none;
-  background:#fff;
+  max-width:960px;
+  margin:0 auto 40px;
   padding:24px;
+  background:#000;
   border-radius:12px;
-  box-shadow: 0 8px 22px rgba(0,0,0,0.06);
-  margin-bottom:18px;
-  opacity:0;
-  transform:translateY(10px);
-  transition: opacity .45s ease, transform .45s ease;
+  overflow:auto;
 }
-article.card.active{ display:block; opacity:1; transform:translateY(0); }
+article.active{
+  display:block;
+  animation:fadeIn 0.6s ease-in-out;
+}
+@keyframes fadeIn{
+  from {opacity:0;}
+  to {opacity:1;}
+}
 
-/* headings */
-article.card h1{ margin-top:0; font-size:26px; }
-article.card h2{ font-size:18px; margin-top:18px; }
-article.card p{ color:var(--text); font-size:15px; }
-
-/* lists */
-article.card ul{ margin-left:20px; }
-
-/* ------------------ Forms header (image + title) ------------------ */
-.forms-header {
+/* Google Form */
+.forms-header{
   position: relative;
   margin-bottom: 18px;
   border-radius:12px;
   overflow:hidden;
 }
-.forms-header img {
+.forms-header img{
   display:block;
   width:100%;
   height:auto;
 }
-.forms-header .title {
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  pointer-events:none;
-}
-.forms-header .title h2{
-  margin:0;
-  color:#fff;
-  text-shadow:0 6px 18px rgba(0,0,0,0.6);
-  font-size:28px;
-  font-weight:700;
-  pointer-events:none;
-  padding: 10px 18px;
-}
-
-/* ------------------ iframe (google form) ------------------ */
-/* Full-width responsive while preserving UX */
-.form-frame-wrap{
-  width:100%;
-  display:flex;
-  justify-content:center;
-}
 .form-frame-wrap iframe{
   width:100%;
-  max-width:1200px; /* comfortable max width */
-  border:0;
-  min-height:720px;
-  height:calc(100vh - 260px); /* attempt to fill viewport minus header/nav */
+  height:1200px;
+  border:none;
+  border-radius:12px;
 }
-
-/* Mobile: taller scrollable iframe */
-@media (max-width:900px){
-  header.site-header h1{ font-size:48px; } /* reduce header on tablet/mobile */
+@media (max-width:768px){
   .form-frame-wrap iframe{
-    width:100%;
-    max-width:100%;
-    height:1400px; /* mobile comfortable scrolling height */
+    height:1800px;
+  }
+  header.site-header h1{
+    font-size:60px;
   }
 }
-@media (max-width:420px){
-  header.site-header h1{ font-size:34px; }
-  header.site-header p.lead{ font-size:16px; }
-  .forms-header .title h2{ font-size:18px; }
-  nav.top-nav .btn { max-width: 360px; }
-  .form-frame-wrap iframe { height:1600px; }
-}
 
-/* ------------------ Footer ------------------ */
-footer.site-footer{
+/* Footer */
+footer{
   background:#000;
   color:#fff;
   text-align:center;
-  padding:20px 12px;
-  font-size:14px;
+  padding:16px;
+  position:relative;
 }
-
-/* small print muted */
-.small-muted{ color:var(--muted); font-size:13px; }
-
 </style>
 </head>
 <body>
 
-<!-- Preloader -->
-<div id="preloader" aria-hidden="true">
-  <div class="loader" aria-hidden="true"></div>
-</div>
-
-<!-- Top header -->
 <header class="site-header">
   <h1>#demo records</h1>
-  
   <div class="description">
-    Российский саб-лейбл YOF Music
-    <br><br>
-    Специализируемся на жанрах opium, hardcore/style, mylancore, hoodtrap и смежных направлениях.
-    <br><br>
-    Рабочее время ПН–ПТ, 12:00–19:00 (UTC+3).
-    <br><br>
+    Российский саб-лейбл YOF Music<br><br>
+    Специализируемся на жанрах opium, hardcore/style, mylancore, hoodtrap и смежных направлениях.<br><br>
+    Рабочее время ПН–ПТ, 12:00–19:00 (UTC+3).<br><br>
     На сайте доступна загрузка дебютного релиза с необходимым комплектом документов, вступающих в юридическую силу с момента заполнения формы.
   </div>
-
   <p class="lead">Выберите документ или загрузите релиз</p>
 </header>
 
-<!-- Nav — buttons (all same size) -->
-<nav class="top-nav" aria-label="Навигация">
-  <button id="formsBtn" class="btn active" onclick="showArticle('forms', this)">Отправить релиз</button>
-  <button id="termsBtn" class="btn" onclick="showArticle('terms', this)">Terms of Use</button>
-  <button id="privacyBtn" class="btn" onclick="showArticle('privacy', this)">Privacy Policy</button>
+<nav>
+  <button id="formsBtn" class="active" onclick="showArticle('forms')">Отправить релиз</button>
+  <button id="termsBtn" onclick="showArticle('terms')">Terms of Use</button>
+  <button id="policyBtn" onclick="showArticle('policy')">Privacy Policy</button>
 </nav>
 
-<!-- Main container -->
-<main class="container" role="main">
+<!-- Google Form -->
+<article id="forms" class="active">
+  <div class="forms-header">
+    <img src="header-bg.jpg" alt="#demo records header image" />
+  </div>
+  <div class="form-frame-wrap">
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe7NnFIpDAKpd1q0i7mMXmdZpQqzHNGumt4oWkF5HTJD1EZLg/viewform?embedded=true"
+      title="Форма: Отправить релиз" loading="lazy"></iframe>
+  </div>
+</article>
 
-  <!-- Google Forms article -->
-  <article id="forms" class="card active" aria-labelledby="forms-title">
-    <div class="forms-header" aria-hidden="true">
-      <!-- image should be placed in same dir as index.html under filename header-bg.jpg -->
-      <img src="header-bg.jpg" alt="#demo records header image" />
-      <div class="title"><h2 id="forms-title">#demo records — Google Forms</h2></div>
-    </div>
+<!-- Terms of Use -->
+<article id="terms">
+  <h2>Terms of Use</h2>
+  <section>
+    <h3>1. Использование сервиса</h3>
+    <ul>
+      <li>Использование #demo records означает согласие с данными условиями.</li>
+      <li>Все права на контент принадлежат пользователю.</li>
+      <li>Роялти не выплачивается при блокировке аккаунта.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>2. Минимальный порог выплаты</h3>
+    <ul>
+      <li>Минимальная сумма вывода роялти: 100$ банковским переводом.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>3. Контент</h3>
+    <ul>
+      <li>Пользователь отвечает за легальность и качество загруженного контента.</li>
+      <li>#demo records может удалять нарушающий правила контент.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>4. Запрещенные действия</h3>
+    <ul>
+      <li>Запрещено загружать нелегальный или вредоносный контент.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>5. Ограничение ответственности</h3>
+    <ul>
+      <li>#demo records не несет ответственности за убытки пользователей.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>6. Права на контент</h3>
+    <ul>
+      <li>Все права на музыку принадлежат пользователю.</li>
+      <li>Любые попытки нарушения авторских прав приведут к блокировке без выплаты роялти.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>7. Условия споров</h3>
+    <ul>
+      <li>Споры решаются в соответствии с законодательством.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>8. Согласие с юрисдикцией</h3>
+    <ul>
+      <li>Использование сервиса подразумевает согласие с юрисдикцией суда по месту нахождения #demo records.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>9. Обновления условий</h3>
+    <ul>
+      <li>#demo records может обновлять условия. Продолжение использования означает согласие с новой версией.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>10. Авторские права</h3>
+    <ul>
+      <li>Пользователи обязаны соблюдать авторские права и условия третьих лиц.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>11. Блокировка</h3>
+    <ul>
+      <li>Нарушение правил может привести к блокировке аккаунта без выплаты роялти.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>12. Контакты</h3>
+    <ul>
+      <li>#demo records</li>
+      <li>Email: support@demo-records.com</li>
+    </ul>
+  </section>
+</article>
 
-    <div class="form-frame-wrap" aria-live="polite">
-      <iframe
-        src="https://docs.google.com/forms/d/e/1FAIpQLSe7NnFIpDAKpd1q0i7mMXmdZpQqzHNGumt4oWkF5HTJD1EZLg/viewform?embedded=true"
-        title="Форма: Отправить релиз"
-        loading="lazy"
-        ></iframe>
-    </div>
-  </article>
+<!-- Privacy Policy -->
+<article id="policy">
+  <h2>Privacy Policy</h2>
+  <section>
+    <h3>1. Сбор информации</h3>
+    <ul>
+      <li>#demo records собирает данные только для предоставления услуг.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>2. Использование информации</h3>
+    <ul>
+      <li>Данные используются для работы сервиса и персонализации.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>3. Раскрытие данных</h3>
+    <ul>
+      <li>Данные не передаются третьим лицам без согласия, кроме случаев, предусмотренных законом.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>4. Файлы cookie</h3>
+    <ul>
+      <li>Используются для анализа и персонализации. Можно отключить в браузере.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>5. Защита информации</h3>
+    <ul>
+      <li>Доступ имеют только уполномоченные сотрудники.</li>
+      <li>Предпринимаются меры для защиты от несанкционированного доступа.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>6. Согласие</h3>
+    <ul>
+      <li>Использование сайта означает согласие с этой Политикой конфиденциальности.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>7. Обновления политики</h3>
+    <ul>
+      <li>#demo records может обновлять Политику, новая версия публикуется на сайте.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>8. Хранение данных</h3>
+    <ul>
+      <li>Данные хранятся только столько, сколько требуется для работы сервиса.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>9. Передача третьим лицам</h3>
+    <ul>
+      <li>Без вашего согласия данные не передаются, кроме законных случаев.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>10. Безопасность</h3>
+    <ul>
+      <li>Принимаются все разумные меры для защиты информации.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>11. Ответственность</h3>
+    <ul>
+      <li>#demo records не несет ответственности за последствия использования сервиса при нарушении условий пользователем.</li>
+    </ul>
+  </section>
+  <section>
+    <h3>12. Контакты</h3>
+    <ul>
+      <li>Email: support@demo-records.com</li>
+    </ul>
+  </section>
+</article>
 
-  <!-- Terms of Use (полный текст) -->
-  <article id="terms" class="card" aria-labelledby="terms-title">
-    <h1 id="terms-title">Terms of Use — #demo records</h1>
-
-    <p>Официальная и действующая редакция Условий использования платформы #demo records.</p>
-
-    <section>
-      <h2>1. Определения</h2>
-      <ul>
-        <li><strong>«Компания»</strong> — #demo records, владелец и оператор онлайн-платформы для музыкальных сервисов.</li>
-        <li><strong>«Клиент»</strong> — лицо или организация, использующие услуги #demo records.</li>
-        <li><strong>«Пользователи»</strong> — лица, которым Клиент предоставил право доступа к своему аккаунту.</li>
-        <li><strong>«Содержимое Клиента»</strong> — музыка, аудио, видео, обложки, метаданные и любые материалы, которыми владеет Клиент.</li>
-        <li><strong>«Платформа»</strong> — веб-сервис #demo records и его инструменты (дистрибуция, промо, статистика и другое).</li>
-        <li><strong>«Расходы, подлежащие компенсации»</strong> — расходы Компании, вычитаемые из доходов Клиента.</li>
-        <li><strong>«Роялти»</strong> — доход, начисляемый Клиенту после получения средств Компанией.</li>
-        <li><strong>«Подписка»</strong> — период и условия, по которым Клиент получает доступ к услугам.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>2. Право доступа и использование платформы</h2>
-      <ul>
-        <li>Компания предоставляет Клиенту ограниченное, непередаваемое право использовать платформу #demo records в соответствии с настоящими Условиями.</li>
-        <li>Клиент обязуется соблюдать правила сервиса и использовать платформу только в законных целях, не нарушая прав третьих лиц.</li>
-        <li>Запрещено предоставлять доступ третьим лицам, кроме зарегистрированных Пользователей, а также совершать попытки взлома, вмешательства в работу сервиса, обхода технических ограничений и любые другие незаконные действия.</li>
-        <li>В случае нарушений настоящих Условий или применимого законодательства Компания вправе приостановить или заблокировать аккаунт Клиента без предварительного уведомления.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>3. Минимальный порог выплат и роялти</h2>
-      <ul>
-        <li>Компания выплачивает роялти Клиенту после фактического получения средств от сторонних сервисов и после удержания всех надлежащих комиссий и расходов.</li>
-        <li><strong>Минимальный порог для банковского перевода составляет 100 (сто) долларов США.</strong></li>
-        <li>В случае блокировки аккаунта за нарушение правил сервиса или законодательства <strong>роялти не выплачиваются</strong>, даже если они уже были начислены, но ещё не перечислены Клиенту.</li>
-        <li>Если в результате операций образуется отрицательный баланс (например, из-за возмещений, штрафов или вычетов), Клиент обязан погасить отрицательный баланс в установленный Компанией срок.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>4. Услуги дистрибуции</h2>
-      <ul>
-        <li>Клиент предоставляет Компании глобальную, неисключительную лицензию на распространение, воспроизведение и использование своего музыкального контента в рамках оказания услуг.</li>
-        <li>Компания вправе использовать имя Клиента, изображения и метаданные для продвижения релизов и предоставлять контент сторонним сервисам (DSP, социальные сети, видеоплатформы и др.).</li>
-        <li>Компания имеет право вычитать прямые расходы (например, платежные сборы, административные расходы) из доходов Клиента в порядке, установленном тарифами.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>5. Пользователи и ответственность Клиента</h2>
-      <ul>
-        <li>Клиент несёт полную ответственность за действия и безопасность данных своих Пользователей, включая выдачу и отзыв доступа.</li>
-        <li>Клиент обязан незамедлительно уведомлять Компанию о фактах неавторизованного доступа или компрометации учетных данных.</li>
-        <li>Клиент гарантирует, что владеет или законно распоряжается всеми правами на загружаемый контент и не нарушает права третьих лиц.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>6. Обязанности Клиента</h2>
-      <ul>
-        <li>Клиент обеспечивает наличие рабочего оборудования, доступа в Интернет и сохранность своих данных, логинов и паролей.</li>
-        <li>Клиент обязуется своевременно предоставлять Компании достоверную информацию, необходимую для оказания услуг.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>7. Права Компании</h2>
-      <ul>
-        <li>Все права на программное обеспечение, дизайн, код и материалы платформы #demo records принадлежат Компании.</li>
-        <li>Клиент не приобретает прав собственности на платформу или её компоненты, получая лишь права использования, описанные в настоящем документе.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>8. Конфиденциальность</h2>
-      <ul>
-        <li>Клиент обязуется не разглашать конфиденциальную информацию о платформе и не использовать её в целях, противоречащих интересам Компании.</li>
-        <li>Конфиденциальная информация может использоваться Компанией только для целей оказания услуг и защиты прав.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>9. Срок действия и прекращение</h2>
-      <ul>
-        <li>Настоящее Соглашение действует до тех пор, пока Клиент использует услуги Компании или пока оно не будет расторгнуто одной из сторон.</li>
-        <li>После прекращения Клиент теряет доступ к платформе; в течение 30 дней Клиент может запросить выгрузку своих материалов.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>10. Передача прав и сторонние ресурсы</h2>
-      <ul>
-        <li>Платформа может содержать ссылки на сторонние ресурсы; Компания не несёт ответственности за контент и условия таких ресурсов.</li>
-        <li>Компания вправе передавать права и обязанности по настоящему Соглашению в рамках корпоративных преобразований при условии уведомления Клиента, если это требуется законом.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>11. Возмещение убытков</h2>
-      <ul>
-        <li>Клиент обязуется возместить Компании все убытки, возникшие вследствие нарушения Клиентом условий настоящего Соглашения, включая претензии третьих лиц.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>12. Изменения условий</h2>
-      <ul>
-        <li>Компания может вносить изменения в настоящие Условия; продолжение использования платформы после публикации изменений означает согласие Клиента с ними.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>13. Использование информации Клиента</h2>
-      <ul>
-        <li>Клиент предоставляет Компании право использовать предоставленный контент для дистрибуции, аналитики, маркетинга и защиты прав, включая передачу в сторонние сервисы в объёме, необходимом для оказания услуг.</li>
-        <li>Компания может запрашивать подтверждающие документы и информацию, подтверждающую права Клиента на содержание.</li>
-      </ul>
-    </section>
-
-    <footer style="margin-top:12px;font-size:13px;color:var(--muted);">
-      Данный текст представляет официальные Условия использования платформы #demo records.
-    </footer>
-  </article>
-
-  <!-- Privacy Policy (полный текст) -->
-  <article id="privacy" class="card" aria-labelledby="privacy-title">
-    <h1 id="privacy-title">Privacy Policy — #demo records</h1>
-
-    <p>Официальная и действующая редакция Политики конфиденциальности платформы #demo records.</p>
-
-    <section>
-      <h2>1. Область применения</h2>
-      <p>Настоящая Политика конфиденциальности применяется ко всем услугам, предоставляемым #demo records через веб-сайт и связанные сервисы. Используя сервис, Вы подтверждаете, что прочитали и принимаете эту Политику.</p>
-    </section>
-
-    <section>
-      <h2>2. Определения персональных данных</h2>
-      <p>Под «персональной информацией» понимаются данные, позволяющие идентифицировать личность: имя, адрес электронной почты, почтовый адрес, номер телефона, платежные данные и т.д.</p>
-    </section>
-
-    <section>
-      <h2>3. Цели сбора персональной информации</h2>
-      <ul>
-        <li>Проверка права на использование сервиса.</li>
-        <li>Предоставление услуг и исполнение обязательств по договорам.</li>
-        <li>Поддержка клиентов и служба поддержки.</li>
-        <li>Улучшение сервиса, персонализация и аналитика.</li>
-        <li>Коммуникация (новости, обновления) при наличии согласия.</li>
-        <li>Обработка платежей и выполнение финансовых операций.</li>
-        <li>Предотвращение мошенничества и соблюдение условий использования.</li>
-      </ul>
-      <p>#demo records обрабатывает данные в минимально необходимом объёме для достижения указанных целей.</p>
-    </section>
-
-    <section>
-      <h2>4. Способы и время сбора информации</h2>
-      <ul>
-        <li>Данные собираются при регистрации, заполнении форм, обращениях в поддержку, использовании сервиса.</li>
-        <li>Автоматический сбор: IP-адрес, cookies, данные о браузере, устройстве и операционной системе.</li>
-        <li>Используются веб-маяки и пиксели для анализа взаимодействий и улучшения сервиса.</li>
-        <li>Вы можете отключить cookies в браузере, но это может повлиять на функциональность сайта.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>5. Передача данных третьим лицам</h2>
-      <ul>
-        <li>#demo records может раскрывать персональную информацию поставщикам услуг (хостинг, платежи, аналитика) в объёме, необходимом для оказания услуг.</li>
-        <li>Также данные могут быть переданы государственным органам при наличии законного запроса.</li>
-        <li>#demo records не продаёт персональные данные клиентов, но может передавать агрегированную и анонимизированную информацию партнёрам.</li>
-        <li>Передача данных возможна в другие страны, включая США и Канаду; используя сервис, Вы даёте согласие на такую передачу.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>6. Права пользователя</h2>
-      <ul>
-        <li>Право доступа к своим данным.</li>
-        <li>Право на исправление неточностей.</li>
-        <li>Право на удаление данных.</li>
-        <li>Право ограничить обработку и запросить переносимость данных.</li>
-        <li>Право отозвать согласие на обработку (в части, где оно необходимо).</li>
-      </ul>
-      <p>Для реализации прав свяжитесь с администрацией сервиса по контактам в разделе «Контакты».</p>
-    </section>
-
-    <section>
-      <h2>7. Защита персональных данных</h2>
-      <ul>
-        <li>Данные хранятся на защищённых серверах; применяется SSL-шифрование при передаче чувствительной информации.</li>
-        <li>Доступ к данным ограничен и предоставляется только уполномоченным сотрудникам.</li>
-        <li>Несмотря на принятые меры, абсолютной гарантии безопасности передаваемых через Интернет данных дать нельзя.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>8. Уведомления о нарушениях безопасности</h2>
-      <ul>
-        <li>В случае утечки, представляющей риск для прав и свобод пользователей, #demo records уведомит соответствующие органы в срок, предусмотренный законом, и пострадавших пользователей.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>9. Сроки хранения</h2>
-      <ul>
-        <li>Персональные данные хранятся столько, сколько необходимо для целей, ради которых они были собраны, если иное не предусмотрено законом.</li>
-        <li>Вы можете запросить удаление данных ранее указанного срока, при этом часть функциональности сервиса может быть недоступна.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>10. Запрещённое использование сервиса</h2>
-      <ul>
-        <li>Запрещено использовать сервис для незаконных целей, распространения вредоносного ПО, нарушения прав третьих лиц и пр.</li>
-        <li>При нарушениях сервис может удалить контент, приостановить или прекратить доступ и обратиться в правоохранительные органы.</li>
-        <li>В случае блокировки аккаунта роялти не выплачиваются.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>11. Изменения Политики</h2>
-      <p>#demo records вправе время от времени изменять настоящую Политику. Новая редакция публикуется на сайте; дальнейшее использование сервиса означает согласие с обновлённой версией.</p>
-    </section>
-
-    <section>
-      <h2>12. Контакты</h2>
-      <p>По вопросам обработки данных, запросам об удалении, доступе и иным вопросам пишите: support@demo-records.com</p>
-    </section>
-
-    <footer style="margin-top:12px;font-size:13px;color:var(--muted);">
-      Данный текст представляет официальную Политику конфиденциальности #demo records.
-    </footer>
-  </article>
-
-</main>
-
-<!-- Footer (moves with page) -->
-<footer class="site-footer" role="contentinfo">
+<footer>
   &copy; 2026, YOF Music
 </footer>
 
 <script>
-/* ---------- Preloader hide ---------- */
-window.addEventListener("load", function(){
-  const preloader = document.getElementById('preloader');
-  if(preloader){
-    preloader.style.transition = "opacity .35s ease";
-    preloader.style.opacity = '0';
-    setTimeout(()=>preloader.style.display='none', 380);
-  }
-});
-
-/* ---------- showArticle function ---------- */
-function showArticle(id, btnEl){
-  // hide all articles
-  document.querySelectorAll('article.card').forEach(a=>{
-    a.classList.remove('active');
-  });
-  // remove active from all nav buttons
-  document.querySelectorAll('nav.top-nav .btn').forEach(b=>{
-    b.classList.remove('active');
-  });
-
-  // show selected
-  const art = document.getElementById(id);
-  if(art) art.classList.add('active');
-
-  // mark clicked button active — if provided
-  if(btnEl){
-    btnEl.classList.add('active');
-  } else {
-    const b = document.getElementById(id+'Btn');
-    if(b) b.classList.add('active');
-  }
-
-  // scroll to top of content
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+function showArticle(id){
+  document.querySelectorAll('article').forEach(a=>a.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id+'Btn').classList.add('active');
 }
 </script>
 
