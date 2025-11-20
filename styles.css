@@ -6,11 +6,12 @@ body {
   color: #111;
   line-height: 1.5;
 }
-header {
-  background: #0b6efd; /* синий фон */
-  color: #fff;
-  padding: 20px;
+header.site-header{
+  background: url('font2.jpg') center center / cover no-repeat;
+  color: #fff; /* text white */
   text-align: center;
+  padding: 36px 16px;
+  position: relative;
 }
 nav {
   background: #fff;
